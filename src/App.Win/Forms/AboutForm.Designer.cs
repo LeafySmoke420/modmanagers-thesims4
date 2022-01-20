@@ -71,9 +71,9 @@
             this.VersionLabel.AutoSize = true;
             this.VersionLabel.Location = new System.Drawing.Point(12, 37);
             this.VersionLabel.Name = "VersionLabel";
-            this.VersionLabel.Size = new System.Drawing.Size(103, 15);
+            this.VersionLabel.Size = new System.Drawing.Size(136, 15);
             this.VersionLabel.TabIndex = 4;
-            this.VersionLabel.Text = "Version: 0.0.1-beta";
+            this.VersionLabel.Text = "Version: 1.0.22020.2-beta";
             // 
             // BuyMeACoffeeLabel
             // 
