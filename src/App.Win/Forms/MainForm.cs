@@ -64,6 +64,8 @@ namespace App.Win
         private void BrowseModsFolder_Click(object sender, EventArgs e)
         {
             BrowseFolder(ModsFolderText);
+
+            RefreshModsFolderMenuButton_Click(default!, default!);
         }
 
         private void BrowseUserProfileFolder_Click(object sender, EventArgs e)
@@ -136,6 +138,8 @@ namespace App.Win
             var _ = new SettingsForm().ShowDialog();
 
             LoadData();
+
+            RefreshModsFolderMenuButton_Click(default!, default!);
         }
 
         private void PreviewImagesButton_Click(object sender, EventArgs e)
