@@ -1,6 +1,7 @@
-﻿using App.Win.Resources;
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Configuration;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Resources;
 
-namespace App.Win.Forms.Common;
+namespace LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
 
 public class BaseForm : Form
 {
@@ -15,10 +16,11 @@ public class BaseForm : Form
     {
         Text = _defaultText;
         Icon = AppIcons.Icon;
-        StartPosition = FormStartPosition.CenterScreen;
         Size = Screen.PrimaryScreen.Resize();
+        StartPosition = FormStartPosition.CenterScreen;
         FormBorderStyle = FormBorderStyle.FixedSingle;
         MaximizeBox = false;
+        MinimizeBox = true;
         ShowInTaskbar = true;
     }
 
@@ -26,17 +28,23 @@ public class BaseForm : Form
     {
         Default();
 
+        StartPosition = FormStartPosition.CenterParent;
         MinimizeBox = false;
+        ShowInTaskbar = false;
     }
 
     protected void ConfigureMain()
     {
-        DefaultDialog();
-
-        ShowInTaskbar = true;
-        MinimizeBox = true;
+        Default();
 
         ResizeWindow(0.5, 0.75);
+    }
+
+    protected void ConfigureAbout()
+    {
+        DefaultDialog();
+
+        ResizeWindow(700, 250);
     }
 
     protected void ConfigurePreviewImage()
@@ -66,36 +74,5 @@ public class BaseForm : Form
     public void UpdateText(string text)
     {
         Text = text;
-    }
-}
-
-
-public static class ScreenExtensions
-{
-    public static Size Resize(this Screen screen, double size = 0.5)
-    {
-        return new Size(Floor(screen.Bounds.Width), Floor(screen.Bounds.Height));
-
-        int Floor(int value) => (int)Math.Floor(value * size);
-    }
-
-    public static Size Resize(this Screen screen, double width, double height)
-    {
-        return new Size(
-            (int)Math.Floor(screen.Bounds.Width * width),
-            (int)Math.Floor(screen.Bounds.Height * height));
-    }
-
-    public static Size Resize(this Screen screen, int width, int height)
-    {
-        width = SetWithinLimitsOf(screen.Bounds.Width, width);
-        height = SetWithinLimitsOf(screen.Bounds.Height, height);
-
-        return new Size(width, height);
-
-        static int SetWithinLimitsOf(int referenceValue, int value)
-        {
-            return value > referenceValue || value < 0 ? 500 : value;
-        }
     }
 }

@@ -30,12 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.TopPanel = new System.Windows.Forms.Panel();
+            this.BuyMeACoffeeButton = new System.Windows.Forms.PictureBox();
             this.LogoPicture = new System.Windows.Forms.PictureBox();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.FileMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RefreshModsFolderMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.FileSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.SettingsMenuButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpMenuButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.ContentPanel = new System.Windows.Forms.Panel();
             this.DetailsPanel = new System.Windows.Forms.Panel();
             this.DetailsModsPanel = new System.Windows.Forms.Panel();
@@ -62,6 +65,7 @@
             this.DefaultErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.TopPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BuyMeACoffeeButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPicture)).BeginInit();
             this.MenuStrip.SuspendLayout();
             this.ContentPanel.SuspendLayout();
@@ -75,6 +79,7 @@
             // 
             // TopPanel
             // 
+            this.TopPanel.Controls.Add(this.BuyMeACoffeeButton);
             this.TopPanel.Controls.Add(this.LogoPicture);
             this.TopPanel.Controls.Add(this.MenuStrip);
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -83,13 +88,27 @@
             this.TopPanel.Size = new System.Drawing.Size(800, 143);
             this.TopPanel.TabIndex = 1;
             // 
+            // BuyMeACoffeeButton
+            // 
+            this.BuyMeACoffeeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BuyMeACoffeeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BuyMeACoffeeButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.BuyMeACoffee_24;
+            this.BuyMeACoffeeButton.Location = new System.Drawing.Point(768, 30);
+            this.BuyMeACoffeeButton.Name = "BuyMeACoffeeButton";
+            this.BuyMeACoffeeButton.Size = new System.Drawing.Size(24, 35);
+            this.BuyMeACoffeeButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.BuyMeACoffeeButton.TabIndex = 3;
+            this.BuyMeACoffeeButton.TabStop = false;
+            this.ToolTip.SetToolTip(this.BuyMeACoffeeButton, "Buy me a coffee!");
+            this.BuyMeACoffeeButton.Click += new System.EventHandler(this.BuyMeACoffeeButton_Click);
+            // 
             // LogoPicture
             // 
             this.LogoPicture.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.LogoPicture.Image = global::App.Win.Resources.AppImages.Logo_TheSims4;
-            this.LogoPicture.Location = new System.Drawing.Point(246, 27);
+            this.LogoPicture.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.Logo_TheSims4;
+            this.LogoPicture.Location = new System.Drawing.Point(265, 27);
             this.LogoPicture.Name = "LogoPicture";
-            this.LogoPicture.Size = new System.Drawing.Size(308, 112);
+            this.LogoPicture.Size = new System.Drawing.Size(270, 110);
             this.LogoPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LogoPicture.TabIndex = 1;
             this.LogoPicture.TabStop = false;
@@ -97,7 +116,8 @@
             // MenuStrip
             // 
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileMenuButton});
+            this.FileMenuButton,
+            this.HelpMenuButton});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Size = new System.Drawing.Size(800, 24);
@@ -132,6 +152,21 @@
             this.SettingsMenuButton.Size = new System.Drawing.Size(182, 22);
             this.SettingsMenuButton.Text = "&Settings";
             this.SettingsMenuButton.Click += new System.EventHandler(this.SettingsMenuButton_Click);
+            // 
+            // HelpMenuButton
+            // 
+            this.HelpMenuButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AboutButton});
+            this.HelpMenuButton.Name = "HelpMenuButton";
+            this.HelpMenuButton.Size = new System.Drawing.Size(44, 20);
+            this.HelpMenuButton.Text = "&Help";
+            // 
+            // AboutButton
+            // 
+            this.AboutButton.Name = "AboutButton";
+            this.AboutButton.Size = new System.Drawing.Size(107, 22);
+            this.AboutButton.Text = "&About";
+            this.AboutButton.Click += new System.EventHandler(this.AboutButton_Click);
             // 
             // ContentPanel
             // 
@@ -219,7 +254,7 @@
             // PreviewImagesButton
             // 
             this.PreviewImagesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PreviewImagesButton.Image = global::App.Win.Resources.AppImages.HtmlImage_24;
+            this.PreviewImagesButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.HtmlImage_24;
             this.PreviewImagesButton.Location = new System.Drawing.Point(348, 3);
             this.PreviewImagesButton.Name = "PreviewImagesButton";
             this.PreviewImagesButton.Size = new System.Drawing.Size(32, 32);
@@ -231,7 +266,7 @@
             // InstallButton
             // 
             this.InstallButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.InstallButton.Image = global::App.Win.Resources.AppImages.Install_24;
+            this.InstallButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.Install_24;
             this.InstallButton.Location = new System.Drawing.Point(272, 3);
             this.InstallButton.Name = "InstallButton";
             this.InstallButton.Size = new System.Drawing.Size(32, 32);
@@ -242,7 +277,7 @@
             // 
             // DeselectAllButton
             // 
-            this.DeselectAllButton.Image = global::App.Win.Resources.AppImages.CancelList_24;
+            this.DeselectAllButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.CancelList_24;
             this.DeselectAllButton.Location = new System.Drawing.Point(41, 3);
             this.DeselectAllButton.Name = "DeselectAllButton";
             this.DeselectAllButton.Size = new System.Drawing.Size(32, 32);
@@ -253,7 +288,7 @@
             // 
             // SelectAllButton
             // 
-            this.SelectAllButton.Image = global::App.Win.Resources.AppImages.CheckList_24;
+            this.SelectAllButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.CheckList_24;
             this.SelectAllButton.Location = new System.Drawing.Point(3, 3);
             this.SelectAllButton.Name = "SelectAllButton";
             this.SelectAllButton.Size = new System.Drawing.Size(32, 32);
@@ -265,7 +300,7 @@
             // UninstallButton
             // 
             this.UninstallButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.UninstallButton.Image = global::App.Win.Resources.AppImages.Uninstall_24;
+            this.UninstallButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.Uninstall_24;
             this.UninstallButton.Location = new System.Drawing.Point(310, 3);
             this.UninstallButton.Name = "UninstallButton";
             this.UninstallButton.Size = new System.Drawing.Size(32, 32);
@@ -276,7 +311,7 @@
             // 
             // OpenFolderButton
             // 
-            this.OpenFolderButton.Image = global::App.Win.Resources.AppImages.OpenFolder_24;
+            this.OpenFolderButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.OpenFolder_24;
             this.OpenFolderButton.Location = new System.Drawing.Point(79, 3);
             this.OpenFolderButton.Name = "OpenFolderButton";
             this.OpenFolderButton.Size = new System.Drawing.Size(32, 32);
@@ -379,6 +414,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.TopPanel.ResumeLayout(false);
             this.TopPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BuyMeACoffeeButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPicture)).EndInit();
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
@@ -428,5 +464,8 @@
         private ToolStripSeparator FileSeparator1;
         private ToolStripMenuItem SettingsMenuButton;
         private ToolTip ToolTip;
+        private ToolStripMenuItem HelpMenuButton;
+        private ToolStripMenuItem AboutButton;
+        private PictureBox BuyMeACoffeeButton;
     }
 }

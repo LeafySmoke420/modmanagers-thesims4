@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace App.Win.Resources {
+namespace LwdGeeks.ModManagers.TheSims4.App.Win.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace App.Win.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("App.Win.Resources.AppImages", typeof(AppImages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages", typeof(AppImages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,16 @@ namespace App.Win.Resources {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BuyMeACoffee_24 {
+            get {
+                object obj = ResourceManager.GetObject("BuyMeACoffee_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

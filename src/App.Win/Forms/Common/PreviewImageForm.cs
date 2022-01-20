@@ -1,4 +1,6 @@
-﻿namespace App.Win.Forms.Common
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
+
+namespace App.Win.Forms.Common
 {
     public partial class PreviewImageForm : BaseForm
     {

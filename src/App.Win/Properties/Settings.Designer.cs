@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace App.Win.Properties {
+namespace LwdGeeks.ModManagers.TheSims4.App.Win.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -1,9 +1,11 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,windows
 
-### Custom ###
-todo.md
+### VisualStudioCode ###
+
+todo.mdf
+*.bak
 
 ### VisualStudioCode ###
 .vscode/*
@@ -25,6 +27,32 @@ todo.md
 .ionide
 
 # Support for Project snippet scope
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
 
 ### VisualStudio ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -409,11 +437,6 @@ FodyWeavers.xsd
 # Local History for Visual Studio Code
 
 # Windows Installer files from build outputs
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
 
 # JetBrains Rider
 *.sln.iml
@@ -421,4 +444,4 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,windows

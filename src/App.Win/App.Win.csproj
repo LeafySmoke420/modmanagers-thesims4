@@ -1,65 +1,67 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<AssemblyName>LwdGeeks.ModManagers.TheSims4.App.Win</AssemblyName>
+		<RootNamespace>LwdGeeks.ModManagers.TheSims4.App.Win</RootNamespace>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Forms\Main.cs~RF65e81ab.TMP" />
-    <None Remove="Resources\Icons.resx~RF169a59a.TMP" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Forms\Main.cs~RF65e81ab.TMP" />
+		<None Remove="Resources\Icons.resx~RF169a59a.TMP" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\AppIcons.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AppIcons.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\AppImages.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AppImages.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\AppTemplates.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AppTemplates.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\AppIcons.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AppIcons.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\AppImages.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AppImages.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\AppTemplates.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AppTemplates.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\AppIcons.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppIcons.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\AppImages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppImages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\AppTemplates.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppTemplates.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\AppIcons.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppIcons.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\AppImages.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppImages.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\AppTemplates.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppTemplates.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 </Project>

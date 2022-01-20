@@ -1,4 +1,4 @@
-﻿namespace App.Win.Configuration
+﻿namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
 {
     public class AppLog
     {

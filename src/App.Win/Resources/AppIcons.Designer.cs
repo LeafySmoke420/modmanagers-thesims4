@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace App.Win.Resources {
+namespace LwdGeeks.ModManagers.TheSims4.App.Win.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace App.Win.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("App.Win.Resources.AppIcons", typeof(AppIcons).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppIcons", typeof(AppIcons).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -1,6 +1,6 @@
-﻿using App.Win.Resources;
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Resources;
 
-namespace App.Win.Configuration
+namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
 {
     public class FileConfiguration
     {

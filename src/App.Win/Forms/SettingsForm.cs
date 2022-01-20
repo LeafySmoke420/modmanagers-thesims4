@@ -1,4 +1,5 @@
-﻿using App.Win.Forms.Common;
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Properties;
 
 namespace App.Win.Forms
 {
@@ -57,40 +58,40 @@ namespace App.Win.Forms
         private void LoadData()
         {
             // Folders
-            UserProfileText.Text = Properties.Settings.Default.UserProfileFolder;
-            ModsFolderText.Text = Properties.Settings.Default.ModsFolder;
-            AppDataFolderText.Text = Properties.Settings.Default.AppDataFolder;
+            UserProfileText.Text = Settings.Default.UserProfileFolder;
+            ModsFolderText.Text = Settings.Default.ModsFolder;
+            AppDataFolderText.Text = Settings.Default.AppDataFolder;
 
             // Extensions
-            ModsFilesText.Text = Properties.Settings.Default.ModsValidExtensions;
-            ImageFilesText.Text = Properties.Settings.Default.ImagesValidExtensions;
-            TrayFilesText.Text = Properties.Settings.Default.TrayValidExtensions;
+            ModsFilesText.Text = Settings.Default.ModsValidExtensions;
+            ImageFilesText.Text = Settings.Default.ImagesValidExtensions;
+            TrayFilesText.Text = Settings.Default.TrayValidExtensions;
 
             // Togles
-            LimitBigModsFolderCheckbox.Checked = Properties.Settings.Default.LimitBigModsFolder;
+            LimitBigModsFolderCheckbox.Checked = Settings.Default.LimitBigModsFolder;
         }
 
         private bool SaveData()
         {
-            var appDataSnapshot = Properties.Settings.Default.AppDataFolder;
+            var appDataSnapshot = Settings.Default.AppDataFolder;
 
             // Folders
-            Properties.Settings.Default.UserProfileFolder = ValidateFolder(UserProfileLabel, UserProfileText);
-            Properties.Settings.Default.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
-            Properties.Settings.Default.AppDataFolder = AppDataFolderText.Text;
+            Settings.Default.UserProfileFolder = ValidateFolder(UserProfileLabel, UserProfileText);
+            Settings.Default.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
+            Settings.Default.AppDataFolder = AppDataFolderText.Text;
 
             // Extensions
-            Properties.Settings.Default.ModsValidExtensions = CleanAndTrimExtensions(ModsFilesLabel, ModsFilesText);
-            Properties.Settings.Default.ImagesValidExtensions = CleanAndTrimExtensions(ImageFilesLabel, ImageFilesText);
-            Properties.Settings.Default.TrayValidExtensions = CleanAndTrimExtensions(TrayFilesLabel, TrayFilesText);
+            Settings.Default.ModsValidExtensions = CleanAndTrimExtensions(ModsFilesLabel, ModsFilesText);
+            Settings.Default.ImagesValidExtensions = CleanAndTrimExtensions(ImageFilesLabel, ImageFilesText);
+            Settings.Default.TrayValidExtensions = CleanAndTrimExtensions(TrayFilesLabel, TrayFilesText);
 
             // Togles
-            Properties.Settings.Default.LimitBigModsFolder = LimitBigModsFolderCheckbox.Checked;
+            Settings.Default.LimitBigModsFolder = LimitBigModsFolderCheckbox.Checked;
 
             if (HasErrors())
                 return false;
 
-            Properties.Settings.Default.Save();
+            Settings.Default.Save();
 
             UpdateAppDataFolder();
 
@@ -112,7 +113,7 @@ namespace App.Win.Forms
             {
                 DefaultErrorProvider.SetError(label, string.Empty);
 
-                var values = textBox.Text.Split(',').Select(x => x.Trim());
+                var values = textBox.Text.Split(',').Select(x => x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x));
 
                 var invalidValues = values.Where(x => x.Contains(' ') || !x.StartsWith("."));
 
@@ -133,7 +134,7 @@ namespace App.Win.Forms
 
             void UpdateAppDataFolder()
             {
-                if (!appDataSnapshot.Equals(Properties.Settings.Default.AppDataFolder, StringComparison.InvariantCultureIgnoreCase))
+                if (!appDataSnapshot.Equals(Settings.Default.AppDataFolder, StringComparison.InvariantCultureIgnoreCase))
                 {
                     Directory.CreateDirectory(appDataSnapshot);
 

@@ -1,6 +1,9 @@
 using App.Win.Forms;
 using App.Win.Forms.Common;
-using App.Win.Resources;
+using LwdGeeks.ModManagers.TheSims4.App.Win;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Properties;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Resources;
 using System.Diagnostics;
 using System.Text;
 
@@ -130,9 +133,9 @@ namespace App.Win
 
         private void SettingsMenuButton_Click(object sender, EventArgs e)
         {
-            _ = new SettingsForm().ShowDialog();
+            var _ = new SettingsForm().ShowDialog();
 
-            LoadSettings();
+            LoadData();
         }
 
         private void PreviewImagesButton_Click(object sender, EventArgs e)
@@ -161,7 +164,7 @@ namespace App.Win
                     .Replace("@NAME", file.Name));
             }
 
-            var previewHtml = Path.Combine(Properties.Settings.Default.AppDataFolder, "previewcheatsheet.html");
+            var previewHtml = Path.Combine(Settings.Default.AppDataFolder, "previewcheatsheet.html");
 
             File.WriteAllText(previewHtml, AppTemplates.HtmlPreviewCheatSheetBody.Replace("@CARDS", sb.ToString()));
 
@@ -174,6 +177,16 @@ namespace App.Win
         private void RefreshModsFolderMenuButton_Click(object sender, EventArgs e)
         {
             LoadMods();
+        }
+
+        private void AboutButton_Click(object sender, EventArgs e)
+        {
+            AboutForm.Instance.ShowDialog();
+        }
+
+        private void BuyMeACoffeeButton_Click(object sender, EventArgs e)
+        {
+            AboutForm.Instance.OpenUrl(AboutForm.Instance.BuyMeACoffeeUrl);
         }
         #endregion
 
@@ -217,20 +230,20 @@ namespace App.Win
 
         private void LoadSettings()
         {
-            ModsFolderText.Text = Properties.Settings.Default.ModsFolder;
+            ModsFolderText.Text = Settings.Default.ModsFolder;
 
-            UserProfileFolderText.Text = Properties.Settings.Default.UserProfileFolder;
+            UserProfileFolderText.Text = Settings.Default.UserProfileFolder;
         }
 
         private void SaveSettings()
         {
-            Properties.Settings.Default.UserProfileFolder = ValidateFolder(UserProfileFolderLabel, UserProfileFolderText);
-            Properties.Settings.Default.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
+            Settings.Default.UserProfileFolder = ValidateFolder(UserProfileFolderLabel, UserProfileFolderText);
+            Settings.Default.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
 
             if (HasErrors())
                 return;
 
-            Properties.Settings.Default.Save();
+            Settings.Default.Save();
 
             string ValidateFolder(Label label, TextBox textBox)
             {
@@ -298,10 +311,10 @@ namespace App.Win
 
             _selectedModFiles = _rawFiles.Where(x => x!.Directory!.FullName.StartsWith(folder));
 
-            if (Properties.Settings.Default.HideTrayFiles)
+            if (Settings.Default.HideTrayFiles)
                 _selectedModFiles = _selectedModFiles.Where(x => Program.FileConfiguration.IsSelectableFile(x));
 
-            if (_selectedModFiles.Count() > 150 && Properties.Settings.Default.LimitBigModsFolder)
+            if (_selectedModFiles.Count() > 150 && Settings.Default.LimitBigModsFolder)
             {
                 var result = DialogResult.Yes;
 

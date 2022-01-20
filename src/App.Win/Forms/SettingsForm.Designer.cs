@@ -266,7 +266,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Image = global::App.Win.Resources.AppImages.Save_24;
+            this.SaveButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.Save_24;
             this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.SaveButton.Location = new System.Drawing.Point(372, 392);
             this.SaveButton.Name = "SaveButton";
@@ -287,7 +287,7 @@
             // 
             // CloseButton
             // 
-            this.CloseButton.Image = global::App.Win.Resources.AppImages.Cancel_24;
+            this.CloseButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.Cancel_24;
             this.CloseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CloseButton.Location = new System.Drawing.Point(475, 392);
             this.CloseButton.Name = "CloseButton";

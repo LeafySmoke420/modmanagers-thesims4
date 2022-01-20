@@ -1,8 +1,9 @@
-using App.Win.Configuration;
+using App.Win;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Configuration;
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace App.Win
+namespace LwdGeeks.ModManagers.TheSims4.App.Win
 {
     internal static class Program
     {

@@ -1,6 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Drawing;
+using System.Text.Json;
+using System.Windows.Forms;
 
-namespace App.Win.Configuration
+namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
 {
     public class ModFileManager
     {
