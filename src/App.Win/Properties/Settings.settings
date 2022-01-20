@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="App.Win.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UserProfileFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ModsFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ModsValidExtensions" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.package,.ts4script,.blueprint,.bpi,.blend</Value>
+    </Setting>
+    <Setting Name="TrayValidExtensions" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.householdbinary,.trayitem,.sgi,.hhi</Value>
+    </Setting>
+    <Setting Name="ImagesValidExtensions" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.jpeg,.jpg,.png,.gif</Value>
+    </Setting>
+    <Setting Name="LimitBigModsFolder" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HideTrayFiles" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AppDataFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
