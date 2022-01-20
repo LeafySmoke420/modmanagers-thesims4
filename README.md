@@ -11,6 +11,10 @@ This is a simple project to organize my mods, I don't know if it's useful for ev
 - Install an entire folder at once.
 - Uninstall them all at once.
 
+## Limitations
+
+- It does not (so far) handle zip, rar or 7z files. I'll add that later to zip and unzip folders as well.
+
 ## Roadmap
 
 Still thinking but there's a lot of polishment to do, adjusments on performance and a better mod handle other than the treeview. Categorization, ordering, Mod toggle (enable/disable). If you have any ideas on what to implement let me know.
@@ -32,6 +36,10 @@ To make it work you'll need .NET 6 Desktop Runtime. (+/- 50mb download)
 It's just faster, safer and has a better performance than .net framework alternatives. I'm thinking on moving this to a electron-based app so I'm not sure if I'll downgrade to anything prior .net 6.
 
 Open issues for broken things, things you want and whatnot. Open a MR to add something, change or fix something.
+
+## License
+
+Is MIT so do whatever you want, I just, kindly ask you to add my name as the source of inspiration and if you need/want something different than this let's talk so we can improve it. :}
 
 If you think it's worth it, [buy me a coffee here](https://www.buymeacoffee.com/lwdgeek)
 
