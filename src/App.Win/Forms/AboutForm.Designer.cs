@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.SourcesText = new System.Windows.Forms.TextBox();
             this.SourcesLabel = new System.Windows.Forms.Label();
             this.AppInfoLabel = new System.Windows.Forms.Label();
@@ -44,9 +45,7 @@
             this.SourcesText.ReadOnly = true;
             this.SourcesText.Size = new System.Drawing.Size(660, 116);
             this.SourcesText.TabIndex = 0;
-            this.SourcesText.Text = "Icons from Flaticon (https://www.flaticon.com)\r\nAuthors: bukeicon, prettycons, Al" +
-    "fredo Hernandez, surang, Pixel perfect, kumakamu, Freepik, Octopocto, Chanut-is-" +
-    "Industries, Smashicons, Good Ware";
+            this.SourcesText.Text = resources.GetString("SourcesText.Text");
             // 
             // SourcesLabel
             // 
@@ -71,9 +70,9 @@
             this.VersionLabel.AutoSize = true;
             this.VersionLabel.Location = new System.Drawing.Point(12, 37);
             this.VersionLabel.Name = "VersionLabel";
-            this.VersionLabel.Size = new System.Drawing.Size(136, 15);
+            this.VersionLabel.Size = new System.Drawing.Size(88, 15);
             this.VersionLabel.TabIndex = 4;
-            this.VersionLabel.Text = "Version: 1.0.22020.2-beta";
+            this.VersionLabel.Text = "Current Version";
             // 
             // BuyMeACoffeeLabel
             // 

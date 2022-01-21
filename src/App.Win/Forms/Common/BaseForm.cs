@@ -58,7 +58,7 @@ public class BaseForm : Form
 
         UpdateText("Application Settings");
 
-        ResizeWindow(600, 480);
+        ResizeWindow(600, 525);
     }
 
     public void ResizeWindow(int width, int height)

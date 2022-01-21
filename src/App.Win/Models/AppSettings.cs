@@ -9,6 +9,7 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Models
             string userProfileFolder,
             string appDataFolder)
         {
+            AppVersion = "1.0.22021.1-beta";
             UserProfileFolder = userProfileFolder;
             AppDataFolder = appDataFolder;
 
@@ -26,6 +27,7 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Models
             InstallationLogFile = Path.Combine(AppDataFolder!, "installation_log");
         }
 
+        public string AppVersion { get; set; }
         public string UserProfileFolder { get; set; }
         public string ModsFolder { get; set; }
         public string AppDataFolder { get; set; }

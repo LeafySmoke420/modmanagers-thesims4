@@ -1,4 +1,5 @@
-﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
 using System.Diagnostics;
 
 namespace App.Win.Forms
@@ -18,6 +19,8 @@ namespace App.Win.Forms
             {
                 UseShellExecute = true
             };
+
+            VersionLabel.Text = $"Version: {Program.AppSettings.AppVersion}";
         }
 
         public static AboutForm Instance

@@ -73,6 +73,8 @@ namespace App.Win.Forms
 
             // Togles
             LimitBigModsFolderCheckbox.Checked = _appSettings.LimitBigModsFolder;
+            SkipConfirmationInstallUninstallCheckbox.Checked = _appSettings.SkipConfirmInstallUninstall;
+            SkipSuccessInstallUninstallCheckbox.Checked = _appSettings.SkipSuccessInstallUninstall;
         }
 
         private bool SaveData()
@@ -91,6 +93,8 @@ namespace App.Win.Forms
 
             // Togles
             _appSettings.LimitBigModsFolder = LimitBigModsFolderCheckbox.Checked;
+            _appSettings.SkipConfirmInstallUninstall = SkipConfirmationInstallUninstallCheckbox.Checked;
+            _appSettings.SkipSuccessInstallUninstall = SkipSuccessInstallUninstallCheckbox.Checked;
 
             if (HasErrors())
                 return false;

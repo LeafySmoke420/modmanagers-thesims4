@@ -54,6 +54,8 @@
             this.BrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.DefaultErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.CloseButton = new System.Windows.Forms.Button();
+            this.SkipConfirmationInstallUninstallCheckbox = new System.Windows.Forms.CheckBox();
+            this.SkipSuccessInstallUninstallCheckbox = new System.Windows.Forms.CheckBox();
             this.FoldersGroupBox.SuspendLayout();
             this.ExtensionsGroupBox.SuspendLayout();
             this.TogglesGroupBox.SuspendLayout();
@@ -246,10 +248,12 @@
             // 
             // TogglesGroupBox
             // 
+            this.TogglesGroupBox.Controls.Add(this.SkipSuccessInstallUninstallCheckbox);
+            this.TogglesGroupBox.Controls.Add(this.SkipConfirmationInstallUninstallCheckbox);
             this.TogglesGroupBox.Controls.Add(this.LimitBigModsFolderCheckbox);
             this.TogglesGroupBox.Location = new System.Drawing.Point(12, 343);
             this.TogglesGroupBox.Name = "TogglesGroupBox";
-            this.TogglesGroupBox.Size = new System.Drawing.Size(560, 43);
+            this.TogglesGroupBox.Size = new System.Drawing.Size(560, 84);
             this.TogglesGroupBox.TabIndex = 2;
             this.TogglesGroupBox.TabStop = false;
             this.TogglesGroupBox.Text = "Toggles";
@@ -257,7 +261,7 @@
             // LimitBigModsFolderCheckbox
             // 
             this.LimitBigModsFolderCheckbox.AutoSize = true;
-            this.LimitBigModsFolderCheckbox.Location = new System.Drawing.Point(209, 17);
+            this.LimitBigModsFolderCheckbox.Location = new System.Drawing.Point(209, 20);
             this.LimitBigModsFolderCheckbox.Name = "LimitBigModsFolderCheckbox";
             this.LimitBigModsFolderCheckbox.Size = new System.Drawing.Size(142, 19);
             this.LimitBigModsFolderCheckbox.TabIndex = 0;
@@ -268,7 +272,7 @@
             // 
             this.SaveButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.Save_24;
             this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.SaveButton.Location = new System.Drawing.Point(372, 392);
+            this.SaveButton.Location = new System.Drawing.Point(372, 433);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(97, 41);
             this.SaveButton.TabIndex = 3;
@@ -289,7 +293,7 @@
             // 
             this.CloseButton.Image = global::LwdGeeks.ModManagers.TheSims4.App.Win.Resources.AppImages.Cancel_24;
             this.CloseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CloseButton.Location = new System.Drawing.Point(475, 392);
+            this.CloseButton.Location = new System.Drawing.Point(475, 433);
             this.CloseButton.Name = "CloseButton";
             this.CloseButton.Size = new System.Drawing.Size(97, 41);
             this.CloseButton.TabIndex = 4;
@@ -298,11 +302,31 @@
             this.CloseButton.UseVisualStyleBackColor = true;
             this.CloseButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
+            // SkipConfirmationInstallUninstallCheckbox
+            // 
+            this.SkipConfirmationInstallUninstallCheckbox.AutoSize = true;
+            this.SkipConfirmationInstallUninstallCheckbox.Location = new System.Drawing.Point(40, 45);
+            this.SkipConfirmationInstallUninstallCheckbox.Name = "SkipConfirmationInstallUninstallCheckbox";
+            this.SkipConfirmationInstallUninstallCheckbox.Size = new System.Drawing.Size(225, 19);
+            this.SkipConfirmationInstallUninstallCheckbox.TabIndex = 1;
+            this.SkipConfirmationInstallUninstallCheckbox.Text = "Skip Confirmation for Install/Uninstall";
+            this.SkipConfirmationInstallUninstallCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // SkipSuccessInstallUninstallCheckbox
+            // 
+            this.SkipSuccessInstallUninstallCheckbox.AutoSize = true;
+            this.SkipSuccessInstallUninstallCheckbox.Location = new System.Drawing.Point(271, 45);
+            this.SkipSuccessInstallUninstallCheckbox.Name = "SkipSuccessInstallUninstallCheckbox";
+            this.SkipSuccessInstallUninstallCheckbox.Size = new System.Drawing.Size(249, 19);
+            this.SkipSuccessInstallUninstallCheckbox.TabIndex = 2;
+            this.SkipSuccessInstallUninstallCheckbox.Text = "Skip Success Messages for Install/Uninstall";
+            this.SkipSuccessInstallUninstallCheckbox.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 441);
+            this.ClientSize = new System.Drawing.Size(584, 486);
             this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.TogglesGroupBox);
@@ -348,5 +372,7 @@
         private Button BrowseAppDataFolderButton;
         private Label AppDataFolderLabel;
         private Button CloseButton;
+        private CheckBox SkipSuccessInstallUninstallCheckbox;
+        private CheckBox SkipConfirmationInstallUninstallCheckbox;
     }
 }

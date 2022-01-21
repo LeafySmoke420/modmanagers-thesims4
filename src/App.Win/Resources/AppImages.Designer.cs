@@ -223,6 +223,16 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SelectedFolder_24 {
+            get {
+                object obj = ResourceManager.GetObject("SelectedFolder_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Uninstall_24 {
             get {
                 object obj = ResourceManager.GetObject("Uninstall_24", resourceCulture);
