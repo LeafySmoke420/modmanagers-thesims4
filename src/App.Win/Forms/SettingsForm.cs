@@ -1,12 +1,17 @@
-﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
-using LwdGeeks.ModManagers.TheSims4.App.Win.Properties;
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Models;
 
 namespace App.Win.Forms
 {
     public partial class SettingsForm : BaseForm
     {
+        private readonly AppSettings _appSettings;
+
         public SettingsForm()
         {
+            _appSettings = Program.AppSettings;
+
             InitializeComponent();
 
             ConfigureSettings();
@@ -58,40 +63,40 @@ namespace App.Win.Forms
         private void LoadData()
         {
             // Folders
-            UserProfileText.Text = Settings.Default.UserProfileFolder;
-            ModsFolderText.Text = Settings.Default.ModsFolder;
-            AppDataFolderText.Text = Settings.Default.AppDataFolder;
+            UserProfileText.Text = _appSettings.UserProfileFolder;
+            ModsFolderText.Text = _appSettings.ModsFolder;
+            AppDataFolderText.Text = _appSettings.AppDataFolder;
 
             // Extensions
-            ModsFilesText.Text = Settings.Default.ModsValidExtensions;
-            ImageFilesText.Text = Settings.Default.ImagesValidExtensions;
-            TrayFilesText.Text = Settings.Default.TrayValidExtensions;
+            ModsFilesText.Text = string.Join(',', _appSettings.ModsValidExtensions);
+            ImageFilesText.Text = string.Join(',', _appSettings.ImagesValidExtensions);
+            TrayFilesText.Text = string.Join(',', _appSettings.TrayValidExtensions);
 
             // Togles
-            LimitBigModsFolderCheckbox.Checked = Settings.Default.LimitBigModsFolder;
+            LimitBigModsFolderCheckbox.Checked = _appSettings.LimitBigModsFolder;
         }
 
         private bool SaveData()
         {
-            var appDataSnapshot = Settings.Default.AppDataFolder;
+            var appDataSnapshot = _appSettings.AppDataFolder;
 
             // Folders
-            Settings.Default.UserProfileFolder = ValidateFolder(UserProfileLabel, UserProfileText);
-            Settings.Default.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
-            Settings.Default.AppDataFolder = AppDataFolderText.Text;
+            _appSettings.UserProfileFolder = ValidateFolder(UserProfileLabel, UserProfileText);
+            _appSettings.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
+            _appSettings.AppDataFolder = AppDataFolderText.Text;
 
             // Extensions
-            Settings.Default.ModsValidExtensions = CleanAndTrimExtensions(ModsFilesLabel, ModsFilesText);
-            Settings.Default.ImagesValidExtensions = CleanAndTrimExtensions(ImageFilesLabel, ImageFilesText);
-            Settings.Default.TrayValidExtensions = CleanAndTrimExtensions(TrayFilesLabel, TrayFilesText);
+            _appSettings.ModsValidExtensions = CleanAndTrimExtensions(ModsFilesLabel, ModsFilesText);
+            _appSettings.ImagesValidExtensions = CleanAndTrimExtensions(ImageFilesLabel, ImageFilesText);
+            _appSettings.TrayValidExtensions = CleanAndTrimExtensions(TrayFilesLabel, TrayFilesText);
 
             // Togles
-            Settings.Default.LimitBigModsFolder = LimitBigModsFolderCheckbox.Checked;
+            _appSettings.LimitBigModsFolder = LimitBigModsFolderCheckbox.Checked;
 
             if (HasErrors())
                 return false;
 
-            Settings.Default.Save();
+            _appSettings.Save();
 
             UpdateAppDataFolder();
 
@@ -109,7 +114,7 @@ namespace App.Win.Forms
                 return textBox.Text;
             }
 
-            string CleanAndTrimExtensions(Label label, TextBox textBox)
+            string[] CleanAndTrimExtensions(Label label, TextBox textBox)
             {
                 DefaultErrorProvider.SetError(label, string.Empty);
 
@@ -122,7 +127,7 @@ namespace App.Win.Forms
                     DefaultErrorProvider.SetError(label, $"Contains invalid extensions: {string.Join(',', invalidValues)}");
                 }
 
-                return string.Join(',', values);
+                return values.ToArray();
             }
 
             bool HasErrors()
@@ -134,7 +139,7 @@ namespace App.Win.Forms
 
             void UpdateAppDataFolder()
             {
-                if (!appDataSnapshot.Equals(Settings.Default.AppDataFolder, StringComparison.InvariantCultureIgnoreCase))
+                if (!appDataSnapshot.Equals(_appSettings.AppDataFolder, StringComparison.InvariantCultureIgnoreCase))
                 {
                     Directory.CreateDirectory(appDataSnapshot);
 

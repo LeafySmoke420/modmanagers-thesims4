@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Win", "src\App.Win\App.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "+ docs", "+ docs", "{A5A240CB-A7BB-4E9E-8163-8C2C526CD664}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		todo.md = todo.md
 	EndProjectSection

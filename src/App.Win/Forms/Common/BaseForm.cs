@@ -1,4 +1,4 @@
-﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Configuration;
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Extensions;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Resources;
 
 namespace LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
