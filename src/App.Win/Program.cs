@@ -1,4 +1,5 @@
 using App.Win;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Extensions;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Managers;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Models;
 using System.Diagnostics;
@@ -44,7 +45,7 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win
 
                 File.WriteAllText(fi.FullName, JsonSerializer.Serialize(logs));
 
-                if (MessageBox.Show($"Something happened and the app will shutdown.\n\nYour reference is `{entry.Reference}`, open the logs?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                if (MessageBoxExt.Confirmation($"Something happened and the app will shutdown.\n\nYour reference is `{entry.Reference}`, open the logs?", "Error") == DialogResult.Yes)
                 {
                     Clipboard.SetText(entry.Reference);
 
