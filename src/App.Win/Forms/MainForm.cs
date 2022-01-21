@@ -202,7 +202,7 @@ namespace App.Win
                 return;
 
             Cursor = Cursors.WaitCursor;
-            Program.FileManager.ResetAndCleanUp();
+            Program.FileManager.ResetAndCleanUp(StatusStrip);
             LoadMods();
             Cursor = Cursors.Default;
 
