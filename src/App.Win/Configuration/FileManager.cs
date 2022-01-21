@@ -1,27 +1,28 @@
-﻿using System.Drawing;
+﻿using LwdGeeks.ModManagers.TheSims4.App.Win.Models;
+using System.Drawing;
 using System.Text.Json;
 using System.Windows.Forms;
 
 namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
 {
-    public class ModFileManager
+    public class FileManager
     {
         private readonly string _fileName;
-        private static ModFileManager _instance;
+        private static FileManager _instance;
 
-        public ModFileManager()
+        public FileManager()
         {
             _fileName = Path.Combine(Properties.Settings.Default.AppDataFolder, "installation_log");
 
             Installed = new List<ModDetail>();
         }
 
-        public static ModFileManager Instance
+        public static FileManager Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new ModFileManager();
+                    _instance = new FileManager();
 
                 return _instance;
             }
@@ -43,9 +44,9 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
 
                 string subfolder;
 
-                if (FileConfiguration.Instance.IsModFile(fi))
+                if (FileSettings.Instance.IsModFile(fi))
                     subfolder = "Mods";
-                else if (FileConfiguration.Instance.IsTrayFile(fi))
+                else if (FileSettings.Instance.IsTrayFile(fi))
                     subfolder = "Tray";
                 else
                     continue;
@@ -113,6 +114,19 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
             return Installed.Where(x =>
                 x.Name.Equals(fi.Name, StringComparison.InvariantCultureIgnoreCase) &&
                 !x.SourceFile.Equals(fi.FullName, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public void ResetAndCleanUp()
+        {
+            if (!Installed.Any())
+                return;
+
+            foreach (var file in Installed)
+                File.Delete(file.SourceFile);
+
+            Installed.Clear();
+
+            WriteInstallationLog();
         }
 
         private void WriteInstallationLog()

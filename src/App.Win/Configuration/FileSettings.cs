@@ -2,13 +2,13 @@
 
 namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
 {
-    public class FileConfiguration
+    public class FileSettings
     {
         private readonly IDictionary<string, (int Index, Image Image)> _imageIcons;
 
-        private static FileConfiguration _instance;
+        private static FileSettings _instance;
 
-        public FileConfiguration()
+        public FileSettings()
         {
             Mods = Properties.Settings.Default.ModsValidExtensions.Split(',').Select(x => x.Trim()).ToArray();
             Tray = Properties.Settings.Default.TrayValidExtensions.Split(',').Select(x => x.Trim()).ToArray();
@@ -25,12 +25,12 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Configuration
             };
         }
 
-        public static FileConfiguration Instance
+        public static FileSettings Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new FileConfiguration();
+                    _instance = new FileSettings();
 
                 return _instance;
             }

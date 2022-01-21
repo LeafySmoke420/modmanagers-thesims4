@@ -43,7 +43,7 @@ namespace App.Win
 
             var file = _rawFiles.SingleOrDefault(x => x.FullName == FileList.SelectedItems[0].Tag.ToString()!);
 
-            PreviewImageButton.Enabled = file != null && Program.FileConfiguration.IsImageFile(file);
+            PreviewImageButton.Enabled = file != null && Program.FileSettings.IsImageFile(file);
         }
 
         private void ModsTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -77,7 +77,7 @@ namespace App.Win
         {
             Cursor = Cursors.WaitCursor;
 
-            Program.ModsInfo.Install(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
+            Program.FileManager.Install(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
 
             Cursor = Cursors.Default;
 
@@ -88,7 +88,7 @@ namespace App.Win
         {
             Cursor = Cursors.WaitCursor;
 
-            Program.ModsInfo.Uninstall(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
+            Program.FileManager.Uninstall(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
 
             Cursor = Cursors.Default;
 
@@ -101,7 +101,7 @@ namespace App.Win
         {
             foreach (ListViewItem item in FileList.Items)
             {
-                if (Program.FileConfiguration.CanBeInstalled(item.Tag.ToString()!))
+                if (Program.FileSettings.CanBeInstalled(item.Tag.ToString()!))
                     item.Checked = true;
             }
         }
@@ -124,7 +124,7 @@ namespace App.Win
         {
             var file = _rawFiles.SingleOrDefault(x => x.FullName == FileList.SelectedItems[0].Tag.ToString()!);
 
-            if (file == null || !Program.FileConfiguration.IsImageFile(file))
+            if (file == null || !Program.FileSettings.IsImageFile(file))
                 return;
 
             PreviewImageForm.Instance.UpdateText($"Preview: {file.Name}");
@@ -151,7 +151,7 @@ namespace App.Win
 
             var selectedFolder = ModsTreeView.SelectedNode.Tag.ToString()!;
             
-            var files = Directory.EnumerateFiles(selectedFolder!, "*", SearchOption.AllDirectories).Select(x => new FileInfo(x)).Where(x => Program.FileConfiguration.IsImageFile(x));
+            var files = Directory.EnumerateFiles(selectedFolder!, "*", SearchOption.AllDirectories).Select(x => new FileInfo(x)).Where(x => Program.FileSettings.IsImageFile(x));
 
             if (!files.Any())
             {
@@ -191,6 +191,18 @@ namespace App.Win
         private void BuyMeACoffeeButton_Click(object sender, EventArgs e)
         {
             AboutForm.Instance.OpenUrl(AboutForm.Instance.BuyMeACoffeeUrl);
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("This will uninstall and remove all the mods from the profile folder.", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            Cursor = Cursors.WaitCursor;
+            Program.FileManager.ResetAndCleanUp();
+            Cursor = Cursors.Default;
+
+            MessageBox.Show("All Done. Everything was deleted.", "Succcess", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -316,7 +328,7 @@ namespace App.Win
             _selectedModFiles = _rawFiles.Where(x => x!.Directory!.FullName.StartsWith(folder));
 
             if (Settings.Default.HideTrayFiles)
-                _selectedModFiles = _selectedModFiles.Where(x => Program.FileConfiguration.IsSelectableFile(x));
+                _selectedModFiles = _selectedModFiles.Where(x => Program.FileSettings.IsSelectableFile(x));
 
             if (_selectedModFiles.Count() > 150 && Settings.Default.LimitBigModsFolder)
             {
@@ -337,9 +349,9 @@ namespace App.Win
                 {
                     fileItem = new ListViewItem(new[] { file.Name, file.Extension })
                     {
-                        ImageIndex = Program.FileConfiguration.GetImageIconIndex(file),
+                        ImageIndex = Program.FileSettings.GetImageIconIndex(file),
                         Tag = file.FullName,
-                        Checked = Program.ModsInfo.IsInstalled(file),
+                        Checked = Program.FileManager.IsInstalled(file),
                         ToolTipText = file.Name
                     };
                 }
@@ -358,7 +370,7 @@ namespace App.Win
 
         private void ConfigureListViews()
         {
-            Program.FileConfiguration.AddImageIcons(FileListImageList);
+            Program.FileSettings.AddImageIcons(FileListImageList);
 
             FileList.CheckBoxes = true;
             FileList.View = View.Details;
@@ -381,7 +393,7 @@ namespace App.Win
         private void RefreshSelected()
         {
             foreach (ListViewItem item in FileList.Items)
-                item.Checked = Program.ModsInfo.IsInstalled(_selectedModFiles.SingleOrDefault(x => x.FullName == item.Tag.ToString())!);
+                item.Checked = Program.FileManager.IsInstalled(_selectedModFiles.SingleOrDefault(x => x.FullName == item.Tag.ToString())!);
         }
 
         private static IEnumerable<DirectoryInfo> GetDirectories(string path)
