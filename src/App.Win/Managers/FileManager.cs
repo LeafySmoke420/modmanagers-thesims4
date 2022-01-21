@@ -22,7 +22,7 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
                 { nameof(AppImages.OpenFolder_24), (4, AppImages.OpenFolder_24) },
                 { nameof(AppImages.SelectedFolder_24), (5, AppImages.SelectedFolder_24) },
             };
-            
+
             Installed = new List<ModInstallationInfo>();
             SelectableExtensions =
                 appSettings.ModsValidExtensions.Concat(
@@ -144,13 +144,24 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
                 !x.SourceFile.Equals(fi.FullName, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public void ResetAndCleanUp()
+        public void ResetAndCleanUp(StatusStrip statusStrip)
         {
             if (!Installed.Any())
                 return;
 
+            var label = statusStrip.Items[0];
+            var index = 1;
+
             foreach (var file in Installed)
-                File.Delete(file.SourceFile);
+            {
+                label.Text = $"Processing {index}/{Installed.Count} files.";
+                statusStrip.Refresh();
+
+                if (File.Exists(file.InstallationPath))
+                    File.Delete(file.InstallationPath);
+            }
+
+            label.Text = "The mods were successfully uninstalled.";
 
             Installed.Clear();
 
@@ -185,7 +196,7 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
         public bool IsTrayFile(string file)
         {
             return _appSettings.TrayValidExtensions.Contains($".{file.Split('.').Last()}");
-}
+        }
 
         public bool IsImageFile(FileInfo file)
         {
