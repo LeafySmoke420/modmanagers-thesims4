@@ -19,6 +19,8 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
                 { nameof(AppImages.Layers_24), (1, AppImages.Layers_24) },
                 { nameof(AppImages.Image_24), (2, AppImages.Image_24) },
                 { nameof(AppImages.Script_24), (3, AppImages.Script_24) },
+                { nameof(AppImages.OpenFolder_24), (4, AppImages.OpenFolder_24) },
+                { nameof(AppImages.SelectedFolder_24), (5, AppImages.SelectedFolder_24) },
             };
             
             Installed = new List<ModInstallationInfo>();
@@ -40,10 +42,17 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
         public List<ModInstallationInfo> Installed { get; set; }
         public string[] SelectableExtensions { get; set; }
 
-        public void Install(IEnumerable<FileInfo> files)
+        public void Install(IEnumerable<FileInfo> files, StatusStrip statusStrip)
         {
+            var label = statusStrip.Items[0];
+            var count = files.Count();
+            var index = 1;
+
             foreach (var fi in files)
             {
+                statusStrip.Items[0].Text = $"Processing {index}/{count} files.";
+                statusStrip.Refresh();
+
                 if (IsInstalled(fi))
                     continue;
 
@@ -61,15 +70,26 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
                     fi.CopyTo(modInfo.InstallationPath);
 
                 Installed.Add(modInfo);
+
+                index++;
             }
 
             WriteInstallationLog();
+
+            label.Text = "The mods were successfully installed.";
         }
 
-        public void Uninstall(IEnumerable<FileInfo> files)
+        public void Uninstall(IEnumerable<FileInfo> files, StatusStrip statusStrip)
         {
+            var label = statusStrip.Items[0];
+            var count = files.Count();
+            var index = 1;
+
             foreach (var fi in files)
             {
+                label.Text = $"Processing {index}/{count} files.";
+                statusStrip.Refresh();
+
                 if (!IsInstalled(fi))
                     continue;
 
@@ -87,9 +107,13 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
                     File.Delete(mod.InstallationPath);
 
                 _ = Installed.Remove(mod);
+
+                index++;
             }
 
             WriteInstallationLog();
+
+            label.Text = "The mods were successfully uninstalled.";
         }
 
         public void LoadInstalledMods()
@@ -174,7 +198,12 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
                 imageList.Images.Add(image.Value.Image);
         }
 
-        public int GetImageIconIndex(FileInfo fi)
+        public int GetFolderImageIndex()
+        {
+            return _imageIcons[nameof(AppImages.OpenFolder_24)].Index;
+        }
+
+        public int GetImageIndexByFileInfo(FileInfo fi)
         {
             if (fi.Extension.Contains("script"))
                 return _imageIcons[nameof(AppImages.Script_24)].Index;
@@ -191,13 +220,17 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Managers
             path = string.Empty;
 
             if (IsModFile(fi))
+            {
                 path = Path.Combine(_appSettings.UserProfileFolder, "Mods");
+                return true;
+            }
             if (IsTrayFile(fi))
+            {
                 path = Path.Combine(_appSettings.UserProfileFolder, "Tray");
+                return true;
+            }
             else
                 return false;
-
-            return true;
         }
 
         private void WriteInstallationLog()

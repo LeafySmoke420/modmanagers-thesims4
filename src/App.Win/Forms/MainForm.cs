@@ -27,7 +27,7 @@ namespace App.Win
             _fileManager = Program.FileManager;
             _modDirectories = new List<DirectoryInfo>();
             _fileItems = new List<ListViewItem>();
-            _rawFiles = new List<FileInfo>();            
+            _rawFiles = new List<FileInfo>();
             _selectedModFiles = new List<FileInfo>();
 
             InitializeComponent();
@@ -53,15 +53,25 @@ namespace App.Win
             PreviewImageButton.Enabled = file != null && _fileManager.IsImageFile(file);
         }
 
+        private void ModsTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                return;
+
+            ModsTreeView.SelectedNode = e.Node;
+        }
+
         private void ModsTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node?.Tag == null || e.Node.Text == "Mods")
+            if (e.Node?.Tag == null || e.Node.Text == "c")
                 return;
 
             var folder = _modDirectories.SingleOrDefault(x => x.FullName == e.Node.Tag.ToString());
 
             if (folder == null)
                 return;
+
+            e.Node.SelectedImageIndex = _fileManager.GetFolderImageIndex();
 
             PopulateItemsForSelectedMod(folder.FullName);
         }
@@ -82,26 +92,12 @@ namespace App.Win
 
         private void InstallButton_Click(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-
-            Program.FileManager.Install(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
-
-            Cursor = Cursors.Default;
-
-            MessageBoxExt.Information("Successfully installed the selected mods.");
+            InstallMods(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
         }
 
         private void UninstallButton_Click(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-
-            Program.FileManager.Uninstall(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
-
-            Cursor = Cursors.Default;
-
-            RefreshSelected();
-
-            MessageBoxExt.Information("Successfully uninstalled the selected mods.");
+            UninstallMods(FileList.CheckedItems.Cast<ListViewItem>().Select(x => new FileInfo(x.Tag.ToString()!)));
         }
 
         private void SelectAllButton_Click(object sender, EventArgs e)
@@ -157,7 +153,7 @@ namespace App.Win
             var sb = new StringBuilder();
 
             var selectedFolder = ModsTreeView.SelectedNode.Tag.ToString()!;
-            
+
             var files = Directory.EnumerateFiles(selectedFolder!, "*", SearchOption.AllDirectories).Select(x => new FileInfo(x)).Where(x => _fileManager.IsImageFile(x));
 
             if (!files.Any())
@@ -207,42 +203,17 @@ namespace App.Win
 
             Cursor = Cursors.WaitCursor;
             Program.FileManager.ResetAndCleanUp();
+            LoadMods();
             Cursor = Cursors.Default;
 
             MessageBoxExt.Information("All Done. Everything was deleted.", "Succcess");
-        }
-
-        private void InstallAllButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void UninstallAllButton_Click(object sender, EventArgs e)
-        {
-            if (!_appSettings.SkipConfirmInstallUninstall)
-            {
-                if (MessageBoxExt.Confirmation("This will uninstall and remove all the mods from the selected folder.") == DialogResult.No)
-                    return;
-            }
-
-            Cursor = Cursors.WaitCursor;
-            Program.FileManager.ResetAndCleanUp();
-            Cursor = Cursors.Default;
-
-            // if (Settings.)
-            MessageBoxExt.Information("All Done. Everything was deleted.", "Succcess");
-        }
-
-        private void DeleteFolderButton_Click(object sender, EventArgs e)
-        {
-
         }
         #endregion
 
         #region ## Private
         private void ConfigureComponents()
         {
-            BrowserDialog.RootFolder = Environment.SpecialFolder.UserProfile; 
+            BrowserDialog.RootFolder = Environment.SpecialFolder.UserProfile;
 
             ConfigureListViews();
 
@@ -327,7 +298,10 @@ namespace App.Win
 
             var rootDirectories = GetDirectories(ModsFolderText.Text);
 
-            var rootNode = new TreeNode("Mods");
+            var rootNode = new TreeNode("Root")
+            {
+                ImageIndex = _fileManager.GetFolderImageIndex()
+            };
 
             PopulateTreeView(rootNode, rootDirectories);
 
@@ -342,7 +316,11 @@ namespace App.Win
             {
                 var childDirs = GetDirectories(parentDir.FullName);
 
-                var childNode = new TreeNode(parentDir.Name) { Tag = parentDir.FullName };
+                var childNode = new TreeNode(parentDir.Name)
+                {
+                    Tag = parentDir.FullName,
+                    ImageIndex = _fileManager.GetFolderImageIndex()
+                };
 
                 if (childDirs.Any())
                     PopulateTreeView(childNode, childDirs);
@@ -367,8 +345,8 @@ namespace App.Win
             {
                 var messageBoxText = "There are a lot of files in this folder. It might take a while to load up, it's harder to manage and it will consume more memory.\n\nYou can disble this warning on the settings.\n\nLoad them all anyway?";
 
-                _selectedModFiles = MessageBoxExt.Confirmation(messageBoxText) == DialogResult.Yes 
-                    ? _selectedModFiles 
+                _selectedModFiles = MessageBoxExt.Confirmation(messageBoxText) == DialogResult.Yes
+                    ? _selectedModFiles
                     : _selectedModFiles.Take(150);
             }
 
@@ -380,7 +358,7 @@ namespace App.Win
                 {
                     fileItem = new ListViewItem(new[] { file.Name, file.Extension })
                     {
-                        ImageIndex = _fileManager.GetImageIconIndex(file),
+                        ImageIndex = _fileManager.GetImageIndexByFileInfo(file),
                         Tag = file.FullName,
                         Checked = Program.FileManager.IsInstalled(file),
                         ToolTipText = file.Name
@@ -402,6 +380,7 @@ namespace App.Win
         private void ConfigureListViews()
         {
             _fileManager.AddImageIcons(FileListImageList);
+            ModsTreeView.SelectedImageIndex = _fileManager.GetFolderImageIndex();
 
             FileList.CheckBoxes = true;
             FileList.View = View.Details;
@@ -425,6 +404,32 @@ namespace App.Win
         {
             foreach (ListViewItem item in FileList.Items)
                 item.Checked = Program.FileManager.IsInstalled(_selectedModFiles.SingleOrDefault(x => x.FullName == item.Tag.ToString())!);
+        }
+
+        private void InstallMods(IEnumerable<FileInfo> files)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            Program.FileManager.Install(files, StatusStrip);
+
+            Cursor = Cursors.Default;
+
+            if (!_appSettings.SkipSuccessInstallUninstall)
+                MessageBoxExt.Information(StatusLabel.Text);
+        }
+
+        private void UninstallMods(IEnumerable<FileInfo> files)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            Program.FileManager.Uninstall(files, StatusStrip);
+
+            RefreshSelected();
+
+            Cursor = Cursors.Default;
+
+            if (!_appSettings.SkipSuccessInstallUninstall)
+                MessageBoxExt.Information(StatusLabel.Text);
         }
 
         private static IEnumerable<DirectoryInfo> GetDirectories(string path)

@@ -9,7 +9,7 @@
 
         internal static DialogResult Information(string message, string title = "Information", MessageBoxButtons buttons = MessageBoxButtons.OK)
         {
-            return MessageBox.Show(title, message, buttons, MessageBoxIcon.Information);
+            return MessageBox.Show(message, title, buttons, MessageBoxIcon.Information);
         }
     }
 }
