@@ -64,6 +64,8 @@
             this.BrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.DefaultErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ResetButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BuyMeACoffeeButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPicture)).BeginInit();
@@ -129,6 +131,8 @@
             this.FileMenuButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RefreshModsFolderMenuButton,
             this.FileSeparator1,
+            this.ResetButton,
+            this.FileSeparator2,
             this.SettingsMenuButton});
             this.FileMenuButton.Name = "FileMenuButton";
             this.FileMenuButton.Size = new System.Drawing.Size(37, 20);
@@ -401,6 +405,18 @@
             // 
             this.DefaultErrorProvider.ContainerControl = this;
             // 
+            // ResetButton
+            // 
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(182, 22);
+            this.ResetButton.Text = "Reset && Cleanup";
+            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
+            // 
+            // FileSeparator2
+            // 
+            this.FileSeparator2.Name = "FileSeparator2";
+            this.FileSeparator2.Size = new System.Drawing.Size(179, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -467,5 +483,7 @@
         private ToolStripMenuItem HelpMenuButton;
         private ToolStripMenuItem AboutButton;
         private PictureBox BuyMeACoffeeButton;
+        private ToolStripMenuItem ResetButton;
+        private ToolStripSeparator FileSeparator2;
     }
 }

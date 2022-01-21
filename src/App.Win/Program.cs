@@ -7,14 +7,14 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win
 {
     internal static class Program
     {
-        public static ModFileManager ModsInfo { get; private set; } = default!;
-        public static FileConfiguration FileConfiguration { get; private set; } = default!;
+        public static FileManager FileManager { get; private set; } = default!;
+        public static FileSettings FileSettings { get; private set; } = default!;
 
         [STAThread]
         static void Main()
         {
-            FileConfiguration = FileConfiguration.Instance;
-            ModsInfo = ModFileManager.Instance;
+            FileSettings = FileSettings.Instance;
+            FileManager = FileManager.Instance;
 
             LoadAndSetupData();
 
@@ -70,7 +70,7 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win
                 Properties.Settings.Default.Save();
             }
 
-            ModsInfo.LoadInstalledMods();
+            FileManager.LoadInstalledMods();
         }
     }
 }
