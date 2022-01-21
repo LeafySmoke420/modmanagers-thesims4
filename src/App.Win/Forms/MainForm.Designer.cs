@@ -36,6 +36,8 @@
             this.FileMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RefreshModsFolderMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.FileSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ResetButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.SettingsMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +45,7 @@
             this.DetailsPanel = new System.Windows.Forms.Panel();
             this.DetailsModsPanel = new System.Windows.Forms.Panel();
             this.FileList = new System.Windows.Forms.ListView();
-            this.FileContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.FileListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PreviewImageButton = new System.Windows.Forms.ToolStripMenuItem();
             this.FileListImageList = new System.Windows.Forms.ImageList(this.components);
             this.DetailsActionPanel = new System.Windows.Forms.Panel();
@@ -64,8 +66,11 @@
             this.BrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.DefaultErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.ResetButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ModsTreeViewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.InstallAllButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.UninstallAllButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteFolderButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.TreeViewContextMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BuyMeACoffeeButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPicture)).BeginInit();
@@ -73,10 +78,11 @@
             this.ContentPanel.SuspendLayout();
             this.DetailsPanel.SuspendLayout();
             this.DetailsModsPanel.SuspendLayout();
-            this.FileContextMenu.SuspendLayout();
+            this.FileListContextMenu.SuspendLayout();
             this.DetailsActionPanel.SuspendLayout();
             this.ModsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DefaultErrorProvider)).BeginInit();
+            this.ModsTreeViewContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // TopPanel
@@ -150,6 +156,18 @@
             this.FileSeparator1.Name = "FileSeparator1";
             this.FileSeparator1.Size = new System.Drawing.Size(179, 6);
             // 
+            // ResetButton
+            // 
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(182, 22);
+            this.ResetButton.Text = "Reset && Cleanup";
+            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
+            // 
+            // FileSeparator2
+            // 
+            this.FileSeparator2.Name = "FileSeparator2";
+            this.FileSeparator2.Size = new System.Drawing.Size(179, 6);
+            // 
             // SettingsMenuButton
             // 
             this.SettingsMenuButton.Name = "SettingsMenuButton";
@@ -211,7 +229,7 @@
             // 
             // FileList
             // 
-            this.FileList.ContextMenuStrip = this.FileContextMenu;
+            this.FileList.ContextMenuStrip = this.FileListContextMenu;
             this.FileList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileList.GroupImageList = this.FileListImageList;
             this.FileList.Location = new System.Drawing.Point(0, 0);
@@ -221,12 +239,12 @@
             this.FileList.UseCompatibleStateImageBehavior = false;
             this.FileList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FileList_MouseClick);
             // 
-            // FileContextMenu
+            // FileListContextMenu
             // 
-            this.FileContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FileListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.PreviewImageButton});
-            this.FileContextMenu.Name = "FileContextMenu";
-            this.FileContextMenu.Size = new System.Drawing.Size(152, 26);
+            this.FileListContextMenu.Name = "FileContextMenu";
+            this.FileListContextMenu.Size = new System.Drawing.Size(152, 26);
             // 
             // PreviewImageButton
             // 
@@ -405,17 +423,41 @@
             // 
             this.DefaultErrorProvider.ContainerControl = this;
             // 
-            // ResetButton
+            // ModsTreeViewContextMenu
             // 
-            this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(182, 22);
-            this.ResetButton.Text = "Reset && Cleanup";
-            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
+            this.ModsTreeViewContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.InstallAllButton,
+            this.UninstallAllButton,
+            this.TreeViewContextMenuSeparator1,
+            this.DeleteFolderButton});
+            this.ModsTreeViewContextMenu.Name = "FileContextMenu";
+            this.ModsTreeViewContextMenu.Size = new System.Drawing.Size(181, 98);
             // 
-            // FileSeparator2
+            // InstallAllButton
             // 
-            this.FileSeparator2.Name = "FileSeparator2";
-            this.FileSeparator2.Size = new System.Drawing.Size(179, 6);
+            this.InstallAllButton.Name = "InstallAllButton";
+            this.InstallAllButton.Size = new System.Drawing.Size(180, 22);
+            this.InstallAllButton.Text = "Install All";
+            this.InstallAllButton.Click += new System.EventHandler(this.InstallAllButton_Click);
+            // 
+            // UninstallAllButton
+            // 
+            this.UninstallAllButton.Name = "UninstallAllButton";
+            this.UninstallAllButton.Size = new System.Drawing.Size(180, 22);
+            this.UninstallAllButton.Text = "Uninstall All";
+            this.UninstallAllButton.Click += new System.EventHandler(this.UninstallAllButton_Click);
+            // 
+            // DeleteFolderButton
+            // 
+            this.DeleteFolderButton.Name = "DeleteFolderButton";
+            this.DeleteFolderButton.Size = new System.Drawing.Size(180, 22);
+            this.DeleteFolderButton.Text = "Delete";
+            this.DeleteFolderButton.Click += new System.EventHandler(this.DeleteFolderButton_Click);
+            // 
+            // TreeViewContextMenuSeparator1
+            // 
+            this.TreeViewContextMenuSeparator1.Name = "TreeViewContextMenuSeparator1";
+            this.TreeViewContextMenuSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // MainForm
             // 
@@ -438,10 +480,11 @@
             this.ContentPanel.PerformLayout();
             this.DetailsPanel.ResumeLayout(false);
             this.DetailsModsPanel.ResumeLayout(false);
-            this.FileContextMenu.ResumeLayout(false);
+            this.FileListContextMenu.ResumeLayout(false);
             this.DetailsActionPanel.ResumeLayout(false);
             this.ModsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DefaultErrorProvider)).EndInit();
+            this.ModsTreeViewContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -470,7 +513,7 @@
         private Panel DetailsActionPanel;
         private Panel ModsPanel;
         private TreeView ModsTreeView;
-        private ContextMenuStrip FileContextMenu;
+        private ContextMenuStrip FileListContextMenu;
         private ToolStripMenuItem PreviewImageButton;
         private MenuStrip MenuStrip;
         private Button PreviewImagesButton;
@@ -485,5 +528,10 @@
         private PictureBox BuyMeACoffeeButton;
         private ToolStripMenuItem ResetButton;
         private ToolStripSeparator FileSeparator2;
+        private ContextMenuStrip ModsTreeViewContextMenu;
+        private ToolStripMenuItem InstallAllButton;
+        private ToolStripMenuItem UninstallAllButton;
+        private ToolStripSeparator TreeViewContextMenuSeparator1;
+        private ToolStripMenuItem DeleteFolderButton;
     }
 }

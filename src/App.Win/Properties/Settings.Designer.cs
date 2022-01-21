@@ -118,5 +118,29 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win.Properties {
                 this["AppDataFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SkipConfirmInstallUninstall {
+            get {
+                return ((bool)(this["SkipConfirmInstallUninstall"]));
+            }
+            set {
+                this["SkipConfirmInstallUninstall"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SkipSuccessInstallUninstall {
+            get {
+                return ((bool)(this["SkipSuccessInstallUninstall"]));
+            }
+            set {
+                this["SkipSuccessInstallUninstall"] = value;
+            }
+        }
     }
 }

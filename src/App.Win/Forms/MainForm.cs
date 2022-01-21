@@ -2,7 +2,8 @@ using App.Win.Forms;
 using App.Win.Forms.Common;
 using LwdGeeks.ModManagers.TheSims4.App.Win;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
-using LwdGeeks.ModManagers.TheSims4.App.Win.Properties;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Managers;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Models;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Resources;
 using System.Diagnostics;
 using System.Text;
@@ -11,16 +12,21 @@ namespace App.Win
 {
     public partial class MainForm : BaseForm
     {
+        private readonly AppSettings _appSettings;
+        private readonly FileManager _fileManager;
         private readonly List<DirectoryInfo> _modDirectories;
         private readonly List<ListViewItem> _fileItems;
         private readonly List<FileInfo> _rawFiles;
+
         private IEnumerable<FileInfo> _selectedModFiles;
 
         public MainForm()
         {
+            _appSettings = Program.AppSettings;
+            _fileManager = Program.FileManager;
             _modDirectories = new List<DirectoryInfo>();
             _fileItems = new List<ListViewItem>();
-            _rawFiles = new List<FileInfo>();
+            _rawFiles = new List<FileInfo>();            
             _selectedModFiles = new List<FileInfo>();
 
             InitializeComponent();
@@ -43,7 +49,7 @@ namespace App.Win
 
             var file = _rawFiles.SingleOrDefault(x => x.FullName == FileList.SelectedItems[0].Tag.ToString()!);
 
-            PreviewImageButton.Enabled = file != null && Program.FileSettings.IsImageFile(file);
+            PreviewImageButton.Enabled = file != null && _fileManager.IsImageFile(file);
         }
 
         private void ModsTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -101,7 +107,7 @@ namespace App.Win
         {
             foreach (ListViewItem item in FileList.Items)
             {
-                if (Program.FileSettings.CanBeInstalled(item.Tag.ToString()!))
+                if (_fileManager.CanBeInstalled(item.Tag.ToString()!))
                     item.Checked = true;
             }
         }
@@ -124,7 +130,7 @@ namespace App.Win
         {
             var file = _rawFiles.SingleOrDefault(x => x.FullName == FileList.SelectedItems[0].Tag.ToString()!);
 
-            if (file == null || !Program.FileSettings.IsImageFile(file))
+            if (file == null || !_fileManager.IsImageFile(file))
                 return;
 
             PreviewImageForm.Instance.UpdateText($"Preview: {file.Name}");
@@ -151,7 +157,7 @@ namespace App.Win
 
             var selectedFolder = ModsTreeView.SelectedNode.Tag.ToString()!;
             
-            var files = Directory.EnumerateFiles(selectedFolder!, "*", SearchOption.AllDirectories).Select(x => new FileInfo(x)).Where(x => Program.FileSettings.IsImageFile(x));
+            var files = Directory.EnumerateFiles(selectedFolder!, "*", SearchOption.AllDirectories).Select(x => new FileInfo(x)).Where(x => _fileManager.IsImageFile(x));
 
             if (!files.Any())
             {
@@ -168,7 +174,7 @@ namespace App.Win
                     .Replace("@NAME", file.Name));
             }
 
-            var previewHtml = Path.Combine(Settings.Default.AppDataFolder, "previewcheatsheet.html");
+            var previewHtml = Path.Combine(_appSettings.AppDataFolder, "previewcheatsheet.html");
 
             File.WriteAllText(previewHtml, AppTemplates.HtmlPreviewCheatSheetBody.Replace("@CARDS", sb.ToString()));
 
@@ -203,6 +209,32 @@ namespace App.Win
             Cursor = Cursors.Default;
 
             MessageBox.Show("All Done. Everything was deleted.", "Succcess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void InstallAllButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UninstallAllButton_Click(object sender, EventArgs e)
+        {
+            if (!_appSettings.SkipConfirmInstallUninstall)
+            {
+                if (MessageBox.Show("This will uninstall and remove all the mods from the selected folder.", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
+            }
+
+            Cursor = Cursors.WaitCursor;
+            Program.FileManager.ResetAndCleanUp();
+            Cursor = Cursors.Default;
+
+            // if (Settings.)
+            MessageBox.Show("All Done. Everything was deleted.", "Succcess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void DeleteFolderButton_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
@@ -246,20 +278,20 @@ namespace App.Win
 
         private void LoadSettings()
         {
-            ModsFolderText.Text = Settings.Default.ModsFolder;
+            ModsFolderText.Text = _appSettings.ModsFolder;
 
-            UserProfileFolderText.Text = Settings.Default.UserProfileFolder;
+            UserProfileFolderText.Text = _appSettings.UserProfileFolder;
         }
 
         private void SaveSettings()
         {
-            Settings.Default.UserProfileFolder = ValidateFolder(UserProfileFolderLabel, UserProfileFolderText);
-            Settings.Default.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
+            _appSettings.UserProfileFolder = ValidateFolder(UserProfileFolderLabel, UserProfileFolderText);
+            _appSettings.ModsFolder = ValidateFolder(ModsFolderLabel, ModsFolderText);
 
             if (HasErrors())
                 return;
 
-            Settings.Default.Save();
+            _appSettings.Save();
 
             string ValidateFolder(Label label, TextBox textBox)
             {
@@ -327,10 +359,10 @@ namespace App.Win
 
             _selectedModFiles = _rawFiles.Where(x => x!.Directory!.FullName.StartsWith(folder));
 
-            if (Settings.Default.HideTrayFiles)
-                _selectedModFiles = _selectedModFiles.Where(x => Program.FileSettings.IsSelectableFile(x));
+            if (_appSettings.HideTrayFiles)
+                _selectedModFiles = _selectedModFiles.Where(x => _fileManager.IsSelectableFile(x));
 
-            if (_selectedModFiles.Count() > 150 && Settings.Default.LimitBigModsFolder)
+            if (_selectedModFiles.Count() > 150 && _appSettings.LimitBigModsFolder)
             {
                 var result = DialogResult.Yes;
 
@@ -349,7 +381,7 @@ namespace App.Win
                 {
                     fileItem = new ListViewItem(new[] { file.Name, file.Extension })
                     {
-                        ImageIndex = Program.FileSettings.GetImageIconIndex(file),
+                        ImageIndex = _fileManager.GetImageIconIndex(file),
                         Tag = file.FullName,
                         Checked = Program.FileManager.IsInstalled(file),
                         ToolTipText = file.Name
@@ -370,7 +402,7 @@ namespace App.Win
 
         private void ConfigureListViews()
         {
-            Program.FileSettings.AddImageIcons(FileListImageList);
+            _fileManager.AddImageIcons(FileListImageList);
 
             FileList.CheckBoxes = true;
             FileList.View = View.Details;

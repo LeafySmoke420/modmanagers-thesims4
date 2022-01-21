@@ -1,5 +1,6 @@
 using App.Win;
-using LwdGeeks.ModManagers.TheSims4.App.Win.Configuration;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Managers;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Models;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -7,15 +8,12 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win
 {
     internal static class Program
     {
+        public static AppSettings AppSettings { get; private set; } = default!;
         public static FileManager FileManager { get; private set; } = default!;
-        public static FileSettings FileSettings { get; private set; } = default!;
 
         [STAThread]
         static void Main()
         {
-            FileSettings = FileSettings.Instance;
-            FileManager = FileManager.Instance;
-
             LoadAndSetupData();
 
             ApplicationConfiguration.Initialize();
@@ -28,7 +26,7 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win
             {
                 // this is a complete garbage solution, jesus.
 
-                var fi = new FileInfo(Path.Combine(Properties.Settings.Default.AppDataFolder, "app_log"));
+                var fi = new FileInfo(AppSettings.AppLogFile);
 
                 var logs = new List<AppLog>();
 
@@ -57,20 +55,8 @@ namespace LwdGeeks.ModManagers.TheSims4.App.Win
 
         private static void LoadAndSetupData()
         {
-            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.UserProfileFolder))
-            {
-                Properties.Settings.Default.UserProfileFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Documents\\Electronic Arts\\The Sims 4");
-                Properties.Settings.Default.Save();
-            }
-
-            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.AppDataFolder))
-            {
-                Properties.Settings.Default.AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "The Sims 4 - Mod Manager");
-                Directory.CreateDirectory(Properties.Settings.Default.AppDataFolder);
-                Properties.Settings.Default.Save();
-            }
-
-            FileManager.LoadInstalledMods();
+            AppSettings = AppSettings.Load();
+            FileManager = FileManager.Create(AppSettings);
         }
     }
 }
