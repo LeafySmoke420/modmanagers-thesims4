@@ -1,4 +1,5 @@
 ﻿using LwdGeeks.ModManagers.TheSims4.App.Win;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Extensions;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Models;
 
@@ -27,9 +28,7 @@ namespace App.Win.Forms
             if (!SaveData())
                 return;
 
-            var result = MessageBox.Show("Settings successfully updated. Close this window?", "Success", MessageBoxButtons.YesNo);
-
-            if (result == DialogResult.Yes)
+            if (MessageBoxExt.Confirmation("Settings successfully updated. Close this window?", "Success") == DialogResult.Yes)
                 Close();
         }
 

@@ -1,6 +1,7 @@
 using App.Win.Forms;
 using App.Win.Forms.Common;
 using LwdGeeks.ModManagers.TheSims4.App.Win;
+using LwdGeeks.ModManagers.TheSims4.App.Win.Extensions;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Forms.Common;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Managers;
 using LwdGeeks.ModManagers.TheSims4.App.Win.Models;
@@ -87,7 +88,7 @@ namespace App.Win
 
             Cursor = Cursors.Default;
 
-            MessageBox.Show("Successfully installed the selected mods.");
+            MessageBoxExt.Information("Successfully installed the selected mods.");
         }
 
         private void UninstallButton_Click(object sender, EventArgs e)
@@ -100,7 +101,7 @@ namespace App.Win
 
             RefreshSelected();
 
-            MessageBox.Show("Successfully uninstalled the selected mods.");
+            MessageBoxExt.Information("Successfully uninstalled the selected mods.");
         }
 
         private void SelectAllButton_Click(object sender, EventArgs e)
@@ -161,7 +162,7 @@ namespace App.Win
 
             if (!files.Any())
             {
-                MessageBox.Show("No images to show on this folder. =/", "No Images", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxExt.Information("No images to show on this folder. =/", "No Images");
 
                 return;
             }
@@ -201,14 +202,14 @@ namespace App.Win
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("This will uninstall and remove all the mods from the profile folder.", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if (MessageBoxExt.Confirmation("This will uninstall and remove all the mods from the profile folder.") == DialogResult.No)
                 return;
 
             Cursor = Cursors.WaitCursor;
             Program.FileManager.ResetAndCleanUp();
             Cursor = Cursors.Default;
 
-            MessageBox.Show("All Done. Everything was deleted.", "Succcess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBoxExt.Information("All Done. Everything was deleted.", "Succcess");
         }
 
         private void InstallAllButton_Click(object sender, EventArgs e)
@@ -220,7 +221,7 @@ namespace App.Win
         {
             if (!_appSettings.SkipConfirmInstallUninstall)
             {
-                if (MessageBox.Show("This will uninstall and remove all the mods from the selected folder.", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBoxExt.Confirmation("This will uninstall and remove all the mods from the selected folder.") == DialogResult.No)
                     return;
             }
 
@@ -229,7 +230,7 @@ namespace App.Win
             Cursor = Cursors.Default;
 
             // if (Settings.)
-            MessageBox.Show("All Done. Everything was deleted.", "Succcess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBoxExt.Information("All Done. Everything was deleted.", "Succcess");
         }
 
         private void DeleteFolderButton_Click(object sender, EventArgs e)
@@ -364,13 +365,11 @@ namespace App.Win
 
             if (_selectedModFiles.Count() > 150 && _appSettings.LimitBigModsFolder)
             {
-                var result = DialogResult.Yes;
+                var messageBoxText = "There are a lot of files in this folder. It might take a while to load up, it's harder to manage and it will consume more memory.\n\nYou can disble this warning on the settings.\n\nLoad them all anyway?";
 
-                var text = "There are a lot of files in this folder. It might take a while to load up, it's harder to manage and it will consume more memory.\n\nYou can disble this warning on the settings.\n\nLoad them all anyway?";
-
-                result = MessageBox.Show(text, "Load Up Time", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-
-                _selectedModFiles = result == DialogResult.Yes ? _selectedModFiles : _selectedModFiles.Take(150);
+                _selectedModFiles = MessageBoxExt.Confirmation(messageBoxText) == DialogResult.Yes 
+                    ? _selectedModFiles 
+                    : _selectedModFiles.Take(150);
             }
 
             foreach (var file in _selectedModFiles.OrderBy(x => x.Extension).ThenBy(x => x.Name))
